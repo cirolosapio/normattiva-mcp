@@ -36,8 +36,15 @@ class SearchAttiAvanzataTool extends Tool {
             return Response::error('Provide at least one between denominazioneAtto, titoloRicerca, or testoRicerca.');
         }
 
+        $payload = array_replace_recursive([
+            'paginazione' => [
+                'paginaCorrente'          => 1,
+                'numeroElementiPerPagina' => 10,
+            ],
+        ], $validated);
+
         return Http::normattiva()
-            ->post('ricerca/avanzata', $validated)
+            ->post('ricerca/avanzata', $payload)
             ->throw();
     }
 
