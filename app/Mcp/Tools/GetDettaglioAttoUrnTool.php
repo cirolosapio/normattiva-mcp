@@ -21,7 +21,8 @@ class GetDettaglioAttoUrnTool extends Tool {
 
         return Http::normattiva()
             ->post('atto/dettaglio-atto-urn', $validated)
-            ->throw();
+            ->throw()
+            ->json();
     }
 
     /**

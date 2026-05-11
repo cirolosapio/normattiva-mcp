@@ -17,7 +17,8 @@ class GetTipologicheClasseProvvedimentoTool extends Tool {
     public function handle(Request $request) : Response {
         return Http::normattiva()
             ->get('tipologiche/classe-provvedimento')
-            ->throw();
+            ->throw()
+            ->json();
     }
 
     /**

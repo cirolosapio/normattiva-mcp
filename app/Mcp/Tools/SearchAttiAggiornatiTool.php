@@ -22,7 +22,8 @@ class SearchAttiAggiornatiTool extends Tool {
 
         return Http::normattiva()
             ->post('ricerca/aggiornati', $validated)
-            ->throw();
+            ->throw()
+            ->json();
     }
 
     /**

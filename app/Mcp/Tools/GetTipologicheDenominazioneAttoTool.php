@@ -17,7 +17,8 @@ class GetTipologicheDenominazioneAttoTool extends Tool {
     public function handle(Request $request) : Response {
         return Http::normattiva()
             ->get('tipologiche/denominazione-atto')
-            ->throw();
+            ->throw()
+            ->json();
     }
 
     /**

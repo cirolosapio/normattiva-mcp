@@ -29,7 +29,8 @@ class GetDettaglioAttoTool extends Tool {
 
         return Http::normattiva()
             ->post('atto/dettaglio-atto', $validated)
-            ->throw();
+            ->throw()
+            ->json();
     }
 
     /**

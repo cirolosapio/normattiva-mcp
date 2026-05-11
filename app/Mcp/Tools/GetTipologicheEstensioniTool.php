@@ -17,7 +17,8 @@ class GetTipologicheEstensioniTool extends Tool {
     public function handle(Request $request) : Response {
         return Http::normattiva()
             ->get('tipologiche/estensioni')
-            ->throw();
+            ->throw()
+            ->json();
     }
 
     /**

@@ -45,7 +45,8 @@ class SearchAttiAvanzataTool extends Tool {
 
         return Http::normattiva()
             ->post('ricerca/avanzata', $payload)
-            ->throw();
+            ->throw()
+            ->json();
     }
 
     /**

@@ -33,7 +33,8 @@ class SearchAttiSempliceTool extends Tool {
 
         return Http::normattiva()
             ->post('ricerca/semplice', $payload)
-            ->throw();
+            ->throw()
+            ->json();
     }
 
     /**
