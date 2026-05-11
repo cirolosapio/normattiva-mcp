@@ -1,0 +1,18 @@
+services:
+  normattiva:
+    image: cirolosapio/frankenphp:1-8.5-pgsql
+    labels:
+      - traefik.http.routers.normattiva.rule=Host(`normattiva.localhost`)
+      - traefik.http.routers.normattiva.tls=true
+    working_dir: /var/www/normattiva
+    volumes:
+      - ..:/var/www/normattiva:cached
+      - ~/.aws:/home/vscode/.aws:rw
+      - ~/.zsh_history:/home/vscode/.zsh_history:rw
+      - ./php.ini:/usr/local/etc/php/conf.d/php.ini:ro
+      - ./xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+
+networks:
+  default:
+    name: normattiva
+

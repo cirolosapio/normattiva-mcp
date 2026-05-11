@@ -1,0 +1,63 @@
+{
+    "dockerComposeFile": "compose.yml",
+    "workspaceFolder": "/var/www/normattiva",
+    "service": "normattiva",
+    "containerUser": "vscode",
+    "features": {
+        "ghcr.io/cirolosapio/devcontainers-features/alpine-user": {
+            "userFolders": "/data/caddy /config/caddy"
+        },
+        "ghcr.io/cirolosapio/devcontainers-features/alpine-ohmyzsh": {},
+        "ghcr.io/cirolosapio/devcontainers-features/alpine-sudo": {},
+        "ghcr.io/cirolosapio/devcontainers-features/alpine-php-xdebug": {},
+        "ghcr.io/cirolosapio/devcontainers-features/alpine-php-composer": {},
+        "ghcr.io/cirolosapio/devcontainers-features/alpine-node": {
+            "globalPackages": "serverless@3"
+        }
+    },
+    "containerEnv": {
+        "PHP_CS_FIXER_IGNORE_ENV": "1"
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "editor.inlayHints.enabled": "offUnlessPressed",
+                "editor.inlayHints.padding": true,
+                "intelephense.environment.phpVersion": "8.5.5",
+                "php-cs-fixer.executablePath": "${extensionPath}/php-cs-fixer.phar",
+                "php-cs-fixer.allowRisky": true,
+                "[php]": {
+                    "editor.defaultFormatter": "junstyle.php-cs-fixer"
+                }
+            },
+            "extensions": [
+                "eamodio.gitlens",
+                "mikestead.dotenv",
+                "DavidAnson.vscode-markdownlint",
+                "shd101wyy.markdown-preview-enhanced",
+                "yzhang.markdown-all-in-one",
+                "redhat.vscode-yaml",
+                "Gruntfuggly.todo-tree",
+                "GitHub.copilot@prerelease",
+                "GitHub.copilot-chat@prerelease",
+                "oderwat.indent-rainbow",
+                "usernamehw.errorlens",
+                "Cardinal90.multi-cursor-case-preserve",
+                "pflannery.vscode-versionlens",
+                // laravel
+                "laravel.vscode-laravel",
+                "shufo.vscode-blade-formatter",
+                // "amiralizadeh9480.laravel-extra-intellisense",
+                // php
+                "bmewburn.vscode-intelephense-client",
+                "junstyle.php-cs-fixer",
+                "MehediDracula.php-namespace-resolver",
+                "neilbrayfield.php-docblocker",
+                // php tests
+                "shashraf.vscode-pestphp"
+                // "SanderRonde.phpstan-vscode",
+                // "recca0120.vscode-phpunit"
+            ]
+        }
+    }
+}
