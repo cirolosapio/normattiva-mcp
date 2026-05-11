@@ -1,7 +1,8 @@
 <?php
 
-return [
+declare(strict_types = 1);
 
+return [
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -13,7 +14,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Normattiva'),
 
     /*
     |--------------------------------------------------------------------------
@@ -120,7 +121,6 @@ return [
 
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
-        'store' => env('APP_MAINTENANCE_STORE', 'database'),
+        'store'  => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-
 ];
