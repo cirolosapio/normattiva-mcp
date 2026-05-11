@@ -7,14 +7,12 @@ namespace App\Mcp\Tools;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Illuminate\Support\Facades\Http;
 use Laravel\Mcp\Request;
-use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
 use Laravel\Mcp\Server\Tool;
 
 #[Description('Full-text search on Normattiva acts with optional pagination, sorting, and facet filters.')]
 class SearchAttiSempliceTool extends Tool {
-    /** Handle the tool request. */
-    public function handle(Request $request) : Response {
+    public function handle(Request $request) {
         $validated = $request->validate([
             'testoRicerca'                        => ['required', 'string', 'min:2', 'max:500'],
             'orderType'                           => ['nullable', 'string', 'in:recente,rilevante'],
