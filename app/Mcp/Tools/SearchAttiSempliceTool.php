@@ -24,8 +24,15 @@ class SearchAttiSempliceTool extends Tool {
             'filtriMap'                           => ['nullable', 'array'],
         ]);
 
+        $payload = array_replace_recursive([
+            'paginazione' => [
+                'paginaCorrente'          => 1,
+                'numeroElementiPerPagina' => 10,
+            ],
+        ], $validated);
+
         return Http::normattiva()
-            ->post('ricerca/semplice', $validated)
+            ->post('ricerca/semplice', $payload)
             ->throw();
     }
 
