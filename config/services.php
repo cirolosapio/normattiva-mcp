@@ -1,7 +1,8 @@
 <?php
 
-return [
+declare(strict_types=1);
 
+return [
     /*
     |--------------------------------------------------------------------------
     | Third Party Services
@@ -35,4 +36,7 @@ return [
         ],
     ],
 
+    'normattiva' => [
+        'base_url' => env('NORMATTIVA_BASE_URL', 'https://api.normattiva.it/t/normattiva.api/bff-opendata/v1/api/v1'),
+    ],
 ];
