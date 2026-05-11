@@ -4,6 +4,10 @@ declare(strict_types = 1);
 
 namespace App\Mcp\Servers;
 
+use App\Mcp\Prompts\AnalizzaAttoPrompt;
+use App\Mcp\Prompts\ConfrontaVersioniPrompt;
+use App\Mcp\Prompts\SpiegaLeggePrompt;
+use App\Mcp\Prompts\VerificaVigenzaPrompt;
 use App\Mcp\Tools\GetDettaglioAttoTool;
 use App\Mcp\Tools\GetDettaglioAttoUrnTool;
 use App\Mcp\Tools\GetTipologicheClasseProvvedimentoTool;
@@ -35,6 +39,9 @@ class NormattivaServer extends Server {
         //
     ];
     protected array $prompts = [
-        //
+        AnalizzaAttoPrompt::class,
+        ConfrontaVersioniPrompt::class,
+        SpiegaLeggePrompt::class,
+        VerificaVigenzaPrompt::class,
     ];
 }
