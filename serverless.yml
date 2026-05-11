@@ -1,0 +1,30 @@
+service: normattiva-mcp
+
+provider:
+  name: aws
+  region: eu-central-1
+  stage: prod
+  environment:
+    APP_KEY: ${ssm:/${self:service}/APP_KEY}
+    LOG_STDERR_FORMATTER: Bref\Monolog\CloudWatchFormatter
+
+package:
+  patterns:
+    - "!.devcontainer/**"
+    - "!.github/**"
+    - "!tests/**"
+    - "!.editorconfig"
+    - "!.env.example"
+    - "!.gitattributes"
+    - "!.php-cs-fixer.dist.php"
+    - "!phpunit.xml"
+
+functions:
+  api:
+    handler: public/index.php
+    runtime: php-85-fpm
+    architecture: arm64
+    url: true
+
+plugins:
+  - ./vendor/bref/bref
