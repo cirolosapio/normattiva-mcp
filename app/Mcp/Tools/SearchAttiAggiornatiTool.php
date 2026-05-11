@@ -7,21 +7,24 @@ namespace App\Mcp\Tools;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Illuminate\Support\Facades\Http;
 use Laravel\Mcp\Request;
+use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
 use Laravel\Mcp\Server\Tool;
 
 #[Description('Retrieve Normattiva acts updated within a date-time interval.')]
 class SearchAttiAggiornatiTool extends Tool {
-    public function handle(Request $request) {
+    public function handle(Request $request) : Response {
         $validated = $request->validate([
             'dataInizioAggiornamento' => ['required', 'date'],
             'dataFineAggiornamento'   => ['required', 'date', 'after_or_equal:dataInizioAggiornamento'],
         ]);
 
-        return Http::normattiva()
-            ->post('ricerca/aggiornati', $validated)
-            ->throw()
-            ->json();
+        return Response::json(
+            Http::normattiva()
+                ->post('ricerca/aggiornati', $validated)
+                ->throw()
+                ->json()
+        );
     }
 
     /**

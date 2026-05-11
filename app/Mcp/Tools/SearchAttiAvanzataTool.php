@@ -13,7 +13,7 @@ use Laravel\Mcp\Server\Tool;
 
 #[Description('Structured search on Normattiva acts using advanced filters like dates, class, title, and full text.')]
 class SearchAttiAvanzataTool extends Tool {
-    public function handle(Request $request) {
+    public function handle(Request $request) : Response {
         $validated = $request->validate([
             'denominazioneAtto'                   => ['nullable', 'string', 'max:100'],
             'titoloRicerca'                       => ['nullable', 'string', 'max:500'],
@@ -42,10 +42,12 @@ class SearchAttiAvanzataTool extends Tool {
             ],
         ], $validated);
 
-        return Http::normattiva()
-            ->post('ricerca/avanzata', $payload)
-            ->throw()
-            ->json();
+        return Response::json(
+            Http::normattiva()
+                ->post('ricerca/avanzata', $payload)
+                ->throw()
+                ->json()
+        );
     }
 
     /**

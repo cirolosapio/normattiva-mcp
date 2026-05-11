@@ -7,12 +7,13 @@ namespace App\Mcp\Tools;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Illuminate\Support\Facades\Http;
 use Laravel\Mcp\Request;
+use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
 use Laravel\Mcp\Server\Tool;
 
 #[Description('Get act detail using redaction parameters such as codiceRedazionale, data GU, article and validity date.')]
 class GetDettaglioAttoTool extends Tool {
-    public function handle(Request $request) {
+    public function handle(Request $request) : Response {
         $validated = $request->validate([
             'dataGU'            => ['required', 'date_format:Y-m-d'],
             'codiceRedazionale' => ['required', 'string', 'max:32'],
@@ -25,10 +26,12 @@ class GetDettaglioAttoTool extends Tool {
             'versione'          => ['nullable', 'integer', 'min:0'],
         ]);
 
-        return Http::normattiva()
-            ->post('atto/dettaglio-atto', $validated)
-            ->throw()
-            ->json();
+        return Response::json(
+            Http::normattiva()
+                ->post('atto/dettaglio-atto', $validated)
+                ->throw()
+                ->json()
+        );
     }
 
     /**
