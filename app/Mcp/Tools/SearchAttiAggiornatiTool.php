@@ -20,12 +20,8 @@ class SearchAttiAggiornatiTool extends Tool {
             'dataFineAggiornamento'   => ['required', 'date', 'after_or_equal:dataInizioAggiornamento'],
         ]);
 
-        $response = Http::normattiva()->post('/ricerca/aggiornati', $validated);
-
-        return Response::json([
-            'status' => $response->status(),
-            'data'   => $response->json(),
-        ]);
+        return Http::normattiva()->post('ricerca/aggiornati', $validated)
+            ->throw();
     }
 
     /**

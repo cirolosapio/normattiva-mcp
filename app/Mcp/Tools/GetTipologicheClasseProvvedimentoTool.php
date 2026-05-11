@@ -15,12 +15,9 @@ use Laravel\Mcp\Server\Tool;
 class GetTipologicheClasseProvvedimentoTool extends Tool {
     /** Handle the tool request. */
     public function handle(Request $request) : Response {
-        $response = Http::normattiva()->get('/tipologiche/classe-provvedimento');
-
-        return Response::json([
-            'status' => $response->status(),
-            'data'   => $response->json(),
-        ]);
+        return Http::normattiva()
+            ->get('tipologiche/classe-provvedimento')
+            ->throw();
     }
 
     /**

@@ -36,12 +36,9 @@ class SearchAttiAvanzataTool extends Tool {
             return Response::error('Provide at least one between denominazioneAtto, titoloRicerca, or testoRicerca.');
         }
 
-        $response = Http::normattiva()->post('/ricerca/avanzata', $validated);
-
-        return Response::json([
-            'status' => $response->status(),
-            'data'   => $response->json(),
-        ]);
+        return Http::normattiva()
+            ->post('ricerca/avanzata', $validated)
+            ->throw();
     }
 
     /**

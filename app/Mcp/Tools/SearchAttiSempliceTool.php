@@ -24,12 +24,9 @@ class SearchAttiSempliceTool extends Tool {
             'filtriMap'                           => ['nullable', 'array'],
         ]);
 
-        $response = Http::normattiva()->post('/ricerca/semplice', $validated);
-
-        return Response::json([
-            'status' => $response->status(),
-            'data'   => $response->json(),
-        ]);
+        return Http::normattiva()
+            ->post('ricerca/semplice', $validated)
+            ->throw();
     }
 
     /**

@@ -19,12 +19,9 @@ class GetDettaglioAttoUrnTool extends Tool {
             'urn' => ['required', 'string', 'starts_with:urn:'],
         ]);
 
-        $response = Http::normattiva()->post('/atto/dettaglio-atto-urn', $validated);
-
-        return Response::json([
-            'status' => $response->status(),
-            'data'   => $response->json(),
-        ]);
+        return Http::normattiva()
+            ->post('atto/dettaglio-atto-urn', $validated)
+            ->throw();
     }
 
     /**
