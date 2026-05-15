@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace App\Mcp\Resources;
+
+use Laravel\Mcp\Request;
+use Laravel\Mcp\Response;
+use Laravel\Mcp\Server\AppResource;
+use Laravel\Mcp\Server\Attributes\AppMeta;
+use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Ui\Enums\Library;
+use Laravel\Mcp\Server\Ui\Enums\Permission;
+
+#[Description('Mostra il dettaglio di un atto cercato per URN con azione rapida per aprire su Normattiva.')]
+#[AppMeta(permissions: [Permission::ClipboardWrite], libraries: [Library::Tailwind])]
+class ActDetailsByUrnApp extends AppResource {
+    public function handle(Request $request) : Response {
+        return Response::view('mcp.act-details-by-urn-app', [
+            'title' => $this->title(),
+        ]);
+    }
+}

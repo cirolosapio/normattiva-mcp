@@ -30,6 +30,9 @@
         <div class="mt-5 flex flex-wrap gap-3">
           <button
             class="inline-flex items-center justify-center rounded-xl bg-teal-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-600 disabled:cursor-not-allowed disabled:opacity-45"
+            id="run-btn" type="button" disabled>Esegui</button>
+          <button
+            class="inline-flex items-center justify-center rounded-xl bg-slate-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-600 disabled:cursor-not-allowed disabled:opacity-45 dark:bg-slate-600 dark:hover:bg-slate-500"
             id="copy-urn-btn" type="button" disabled>Copia URN</button>
           <button
             class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-45 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
@@ -75,8 +78,10 @@
       const state = {
         urn: '',
         act: null,
+        lastToolCall: null,
       };
 
+      const runButton = document.getElementById('run-btn');
       const copyButton = document.getElementById('copy-urn-btn');
       const openButton = document.getElementById('open-normattiva-btn');
       const urnValue = document.getElementById('urn-value');
@@ -158,6 +163,37 @@
         }, 1200);
       }
 
+      async function runTool() {
+        if (!state.lastToolCall) {
+          return;
+        }
+
+        runButton.disabled = true;
+        runButton.textContent = 'Caricamento…';
+
+        try {
+          const result = await app.callServerTool({
+            name: state.lastToolCall.name,
+            arguments: JSON.parse(state.lastToolCall.arguments ?? '{}'),
+          });
+
+          if (result.isError) {
+            statusValue.textContent = 'Il tool ha restituito un errore';
+
+            return;
+          }
+
+          const payload = JSON.parse(result.content?.[0]?.text ?? '{}');
+          renderAct(payload);
+        } catch {
+          statusValue.textContent = 'Impossibile eseguire il tool';
+        } finally {
+          runButton.disabled = false;
+          runButton.textContent = 'Esegui';
+        }
+      }
+
+      runButton.addEventListener('click', runTool);
       copyButton.addEventListener('click', copyUrn);
       openButton.addEventListener('click', async () => {
         if (!state.urn) {
@@ -168,6 +204,11 @@
       });
 
       app.onToolInput((params) => {
+        state.lastToolCall = {
+          name: params.name,
+          arguments: params.arguments
+        };
+
         try {
           const input = JSON.parse(params.arguments ?? '{}');
 
@@ -179,6 +220,8 @@
         } catch {
           // Ignore malformed input state.
         }
+
+        runButton.disabled = false;
       });
 
       app.onToolResult((params) => {
