@@ -35,4 +35,20 @@ class GetTipologicheClasseProvvedimentoTool extends Tool {
     public function schema(JsonSchema $schema) : array {
         return [];
     }
+
+    /**
+     * Get the tool's output schema.
+     *
+     * @return array<string, JsonSchema>
+     */
+    public function outputSchema(JsonSchema $schema) : array {
+        return [
+            'items' => $schema->array()
+                ->items($schema->object([
+                    'label' => $schema->string()->description('Codice della classe di provvedimento')->required(),
+                    'value' => $schema->string()->description('Descrizione della classe di provvedimento')->required(),
+                ]))
+                ->description('Elenco delle classi di provvedimento disponibili'),
+        ];
+    }
 }

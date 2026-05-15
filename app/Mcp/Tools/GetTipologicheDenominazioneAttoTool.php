@@ -35,4 +35,20 @@ class GetTipologicheDenominazioneAttoTool extends Tool {
     public function schema(JsonSchema $schema) : array {
         return [];
     }
+
+    /**
+     * Get the tool's output schema.
+     *
+     * @return array<string, JsonSchema>
+     */
+    public function outputSchema(JsonSchema $schema) : array {
+        return [
+            'items' => $schema->array()
+                ->items($schema->object([
+                    'label' => $schema->string()->description('Codice della denominazione atto')->required(),
+                    'value' => $schema->string()->description('Descrizione della denominazione atto')->required(),
+                ]))
+                ->description('Elenco delle denominazioni di atto disponibili'),
+        ];
+    }
 }

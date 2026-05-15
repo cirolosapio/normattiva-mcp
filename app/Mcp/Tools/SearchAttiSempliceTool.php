@@ -64,4 +64,36 @@ class SearchAttiSempliceTool extends Tool {
                 ->description('Mappa facoltativa di filtri per facet, ad esempio codice_tipo_provvedimento o anno_provvedimento'),
         ];
     }
+
+    /**
+     * Get the tool's output schema.
+     *
+     * @return array<string, JsonSchema>
+     */
+    public function outputSchema(JsonSchema $schema) : array {
+        return [
+            'listaAtti' => $schema->array()
+                ->items($schema->object([
+                    'codiceRedazionale'  => $schema->string()->description('Codice redazionale dell\'atto'),
+                    'titoloAtto'         => $schema->string()->description('Titolo completo dell\'atto'),
+                    'descrizioneAtto'    => $schema->string()->nullable()->description('Descrizione sintetica dell\'atto'),
+                    'denominazioneAtto'  => $schema->string()->description('Denominazione del tipo atto'),
+                    'dataGU'             => $schema->string()->description('Data della Gazzetta Ufficiale in formato Y-m-d'),
+                    'numeroGU'           => $schema->string()->description('Numero della Gazzetta Ufficiale'),
+                    'dataEmanazione'     => $schema->string()->nullable()->description('Data di emanazione in formato ISO-8601'),
+                    'dataUltimaModifica' => $schema->string()->nullable()->description('Data ultima modifica in formato ISO-8601'),
+                ]))
+                ->description('Elenco degli atti restituiti dalla ricerca semplice')
+                ->required(),
+            'facetMap' => $schema->object()
+                ->description('Mappa dei facet aggregati per categoria')
+                ->required(),
+            'numeroPagine'            => $schema->integer()->description('Numero totale di pagine disponibili')->required(),
+            'numeroAttiTrovati'       => $schema->integer()->description('Numero totale di atti trovati')->required(),
+            'paginaCorrente'          => $schema->integer()->description('Pagina corrente dei risultati')->required(),
+            'numeroElementiPerPagina' => $schema->integer()->description('Numero di elementi restituiti per pagina')->required(),
+            'message'                 => $schema->string()->nullable()->description('Messaggio informativo opzionale'),
+            'numeroFileRicerca'       => $schema->integer()->description('Identificativo numerico della ricerca'),
+        ];
+    }
 }

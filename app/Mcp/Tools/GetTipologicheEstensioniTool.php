@@ -35,4 +35,20 @@ class GetTipologicheEstensioniTool extends Tool {
     public function schema(JsonSchema $schema) : array {
         return [];
     }
+
+    /**
+     * Get the tool's output schema.
+     *
+     * @return array<string, JsonSchema>
+     */
+    public function outputSchema(JsonSchema $schema) : array {
+        return [
+            'items' => $schema->array()
+                ->items($schema->object([
+                    'label' => $schema->string()->description('Codice estensione/formato')->required(),
+                    'value' => $schema->string()->description('Descrizione estensione/formato')->required(),
+                ]))
+                ->description('Elenco delle estensioni/formati disponibili'),
+        ];
+    }
 }

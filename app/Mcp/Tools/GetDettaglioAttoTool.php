@@ -62,4 +62,41 @@ class GetDettaglioAttoTool extends Tool {
             'versione'       => $schema->integer()->description('Numero di versione opzionale'),
         ];
     }
+
+    /**
+     * Get the tool's output schema.
+     *
+     * @return array<string, JsonSchema>
+     */
+    public function outputSchema(JsonSchema $schema) : array {
+        return [
+            'code' => $schema->integer()
+                ->nullable()
+                ->description('Codice di errore applicativo restituito dal backend, se presente'),
+            'message' => $schema->string()
+                ->nullable()
+                ->description('Messaggio di errore o informazione generale'),
+            'success' => $schema->boolean()
+                ->description('Indica se la chiamata e stata elaborata con successo')
+                ->required(),
+            'data' => $schema->object([
+                'atto' => $schema->object([
+                    'titolo'                       => $schema->string()->description('Titolo dell\'atto'),
+                    'sottoTitolo'                  => $schema->string()->nullable()->description('Sottotitolo dell\'atto'),
+                    'articoloHtml'                 => $schema->string()->description('Contenuto articolo in HTML'),
+                    'tipoProvvedimentoDescrizione' => $schema->string()->description('Descrizione del tipo di provvedimento'),
+                    'tipoProvvedimentoCodice'      => $schema->string()->description('Codice del tipo di provvedimento'),
+                    'annoProvvedimento'            => $schema->integer()->description('Anno del provvedimento'),
+                    'numeroProvvedimento'          => $schema->integer()->description('Numero del provvedimento'),
+                    'dataPubblicazioneInGazzetta'  => $schema->string()->nullable()->description('Data di pubblicazione in Gazzetta Ufficiale'),
+                    'articoloDataInizioVigenza'    => $schema->string()->nullable()->description('Data inizio vigenza dell\'articolo'),
+                    'articoloDataFineVigenza'      => $schema->string()->nullable()->description('Data fine vigenza dell\'articolo'),
+                    'testoInVigore'                => $schema->string()->nullable()->description('Indicazione testuale sullo stato di vigenza'),
+                ])->description('Dettaglio dell\'atto richiesto')->required(),
+                'message' => $schema->string()
+                    ->nullable()
+                    ->description('Messaggio informativo associato al contenuto data'),
+            ])->description('Payload di risposta del dettaglio atto')->required(),
+        ];
+    }
 }
