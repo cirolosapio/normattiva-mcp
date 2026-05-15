@@ -15,11 +15,9 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
-        with:
-          node-version: 20
-
+        
       - name: Install Serverless Framework
-        run: npm install -g serverless@3
+        run: npm install -g serverless@3 @aws-sdk/region-config-resolver@3.972.15
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
