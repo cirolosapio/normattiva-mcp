@@ -7,11 +7,15 @@ namespace App\Mcp\Prompts;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Attributes\Name;
+use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Prompt;
 use Laravel\Mcp\Server\Prompts\Argument;
 
-#[Description('Spiega una legge in linguaggio chiaro, adattando tono e livello al pubblico destinatario.')]
-class SpiegaLeggePrompt extends Prompt {
+#[Name('explain-law')]
+#[Title('Spiega una legge')]
+#[Description('Spiega una legge in linguaggio chiaro, adattando tono e livello al pubblico destinatario')]
+class ExplainLawPrompt extends Prompt {
     /** Handle the prompt request. */
     public function handle(Request $request) : array {
         $validated = $request->validate([

@@ -7,11 +7,15 @@ namespace App\Mcp\Prompts;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Attributes\Name;
+use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Prompt;
 use Laravel\Mcp\Server\Prompts\Argument;
 
-#[Description('Confronta due versioni di un atto e riassume differenze sostanziali, impatti e aree di rischio.')]
-class ConfrontaVersioniPrompt extends Prompt {
+#[Name('compare-regulatory-versions')]
+#[Title('Analisi di Novellazione Normativa')]
+#[Description('Analizza la novellazione tra due versioni di un atto normativo, riassumendo differenze sostanziali, impatti e aree di rischio')]
+class CompareRegulatoryVersionsPrompt extends Prompt {
     /** Handle the prompt request. */
     public function handle(Request $request) : array {
         $validated = $request->validate([
@@ -64,12 +68,12 @@ class ConfrontaVersioniPrompt extends Prompt {
         return [
             new Argument(
                 name: 'versionePrecedente',
-                description: 'Testo versione precedente dell atto.',
+                description: 'Testo versione precedente dell atto',
                 required: true,
             ),
             new Argument(
                 name: 'versioneCorrente',
-                description: 'Testo versione corrente dell atto.',
+                description: 'Testo versione corrente dell atto',
                 required: true,
             ),
             new Argument(

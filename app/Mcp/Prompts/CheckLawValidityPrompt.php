@@ -7,11 +7,15 @@ namespace App\Mcp\Prompts;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Attributes\Name;
+use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Prompt;
 use Laravel\Mcp\Server\Prompts\Argument;
 
-#[Description('Verifica la vigenza di un atto a una data specifica e indica modifiche o abrogazioni rilevanti.')]
-class VerificaVigenzaPrompt extends Prompt {
+#[Name('check-law-validity')]
+#[Title('Verifica la vigenza di un atto normativo')]
+#[Description('Verifica la vigenza di un atto a una data specifica e indica modifiche o abrogazioni rilevanti')]
+class CheckLawValidityPrompt extends Prompt {
     /** Handle the prompt request. */
     public function handle(Request $request) : array {
         $validated = $request->validate([
@@ -60,17 +64,17 @@ class VerificaVigenzaPrompt extends Prompt {
         return [
             new Argument(
                 name: 'riferimentoAtto',
-                description: 'Riferimento atto (es. URN, legge 123/2020, codice redazionale).',
+                description: 'Riferimento atto (es. URN, legge 123/2020, codice redazionale)',
                 required: true,
             ),
             new Argument(
                 name: 'dataRiferimento',
-                description: 'Data della verifica in formato Y-m-d. Se omessa usa oggi.',
+                description: 'Data della verifica in formato Y-m-d. Se omessa usa oggi',
                 required: false,
             ),
             new Argument(
                 name: 'contestoDomanda',
-                description: 'Contesto applicativo della verifica (es. appalto pubblico, lavoro, fisco).',
+                description: 'Contesto applicativo della verifica (es. appalto pubblico, lavoro, fisco)',
                 required: false,
             ),
         ];

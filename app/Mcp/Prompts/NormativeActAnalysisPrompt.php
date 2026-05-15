@@ -7,11 +7,15 @@ namespace App\Mcp\Prompts;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Attributes\Name;
+use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Prompt;
 use Laravel\Mcp\Server\Prompts\Argument;
 
-#[Description('Analizza un atto normativo e produce una scheda strutturata con obblighi, divieti, decorrenza e rinvii.')]
-class AnalizzaAttoPrompt extends Prompt {
+#[Name('normative-act-analysis')]
+#[Title('Analisi atto normativo')]
+#[Description('Analizza un atto normativo e produce una scheda strutturata con obblighi, divieti, decorrenza e rinvii')]
+class NormativeActAnalysisPrompt extends Prompt {
     /** Handle the prompt request. */
     public function handle(Request $request) : array {
         $validated = $request->validate([
@@ -62,22 +66,22 @@ class AnalizzaAttoPrompt extends Prompt {
         return [
             new Argument(
                 name: 'testoAtto',
-                description: 'Testo dell atto da analizzare.',
+                description: 'Testo dell atto da analizzare',
                 required: true,
             ),
             new Argument(
                 name: 'titoloAtto',
-                description: 'Titolo o riferimento dell atto (facoltativo).',
+                description: 'Titolo o riferimento dell atto (facoltativo)',
                 required: false,
             ),
             new Argument(
                 name: 'focus',
-                description: 'Aspetto da approfondire (es. sanzioni, adempimenti PA, impatti imprese).',
+                description: 'Aspetto da approfondire (es. sanzioni, adempimenti PA, impatti imprese)',
                 required: false,
             ),
             new Argument(
                 name: 'livelloDettaglio',
-                description: 'Livello di dettaglio: sintetico, medio, approfondito.',
+                description: 'Livello di dettaglio: sintetico, medio, approfondito',
                 required: false,
             ),
         ];
