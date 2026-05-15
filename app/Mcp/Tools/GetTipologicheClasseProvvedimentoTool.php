@@ -8,9 +8,15 @@ use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Illuminate\Support\Facades\Http;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
+use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
+use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 
-#[Description('List available provision classes and related codes from Normattiva lookup endpoint.')]
+#[IsDestructive(false)]
+#[IsIdempotent(false)]
+#[Title('Recupera tipologiche classe provvedimento')]
+#[Description('Elenca le classi di provvedimento disponibili e i codici correlati dall\'endpoint di lookup di Normattiva')]
 class GetTipologicheClasseProvvedimentoTool extends Tool {
     public function handle() : Response {
         return Response::json(

@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\Http;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
+use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
+use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 
-#[Description('Structured search on Normattiva acts using advanced filters like dates, class, title, and full text.')]
+#[IsDestructive(false)]
+#[IsIdempotent(false)]
+#[Title('Recupera atti avanzati')]
+#[Description('Structured search on Normattiva acts using advanced filters like dates, class, title, and full text')]
 class SearchAttiAvanzataTool extends Tool {
     public function handle(Request $request) : Response {
         $validated = $request->validate([
@@ -32,7 +38,7 @@ class SearchAttiAvanzataTool extends Tool {
         ]);
 
         if (!isset($validated['titoloRicerca']) && !isset($validated['testoRicerca']) && !isset($validated['denominazioneAtto'])) {
-            return Response::error('Provide at least one between denominazioneAtto, titoloRicerca, or testoRicerca.');
+            return Response::error('Provide at least one between denominazioneAtto, titoloRicerca, or testoRicerca');
         }
 
         $payload = array_replace_recursive([
@@ -57,18 +63,18 @@ class SearchAttiAvanzataTool extends Tool {
      */
     public function schema(JsonSchema $schema) : array {
         return [
-            'denominazioneAtto'          => $schema->string()->description('Act denomination code or label, for example LEGGE or DECRETO.'),
-            'titoloRicerca'              => $schema->string()->description('Query text on act title.'),
-            'testoRicerca'               => $schema->string()->description('Query text on full act text.'),
-            'orderType'                  => $schema->string()->description('Sort order for results.')->enum(['recente', 'rilevante'])->default('recente'),
-            'dataInizioEmanazione'       => $schema->string()->description('Start date for issuance filter in format Y-m-d.'),
-            'dataFineEmanazione'         => $schema->string()->description('End date for issuance filter in format Y-m-d.'),
-            'dataInizioPubProvvedimento' => $schema->string()->description('Start publication date filter in format Y-m-d.'),
-            'dataFinePubProvvedimento'   => $schema->string()->description('End publication date filter in format Y-m-d.'),
-            'vigenza'                    => $schema->string()->description('Date for validity filter in format Y-m-d.'),
-            'classeProvvedimento'        => $schema->string()->description('Provision class code.'),
-            'paginazione'                => $schema->object()->description('Pagination object with paginaCorrente and numeroElementiPerPagina.'),
-            'filtriMap'                  => $schema->object()->description('Optional map of facet filters.'),
+            'denominazioneAtto'          => $schema->string()->description('Codice o etichetta denominazione atto, per esempio LEGGE o DECRETO'),
+            'titoloRicerca'              => $schema->string()->description('Testo di ricerca sul titolo dell\'atto'),
+            'testoRicerca'               => $schema->string()->description('Testo di ricerca sul testo completo dell\'atto'),
+            'orderType'                  => $schema->string()->description('Ordine di ordinamento dei risultati')->enum(['recente', 'rilevante'])->default('recente'),
+            'dataInizioEmanazione'       => $schema->string()->description('Data di inizio per il filtro di emanazione nel formato Y-m-d'),
+            'dataFineEmanazione'         => $schema->string()->description('Data di fine per il filtro di emanazione nel formato Y-m-d'),
+            'dataInizioPubProvvedimento' => $schema->string()->description('Filtro data di inizio della pubblicazione nel formato Y-m-d'),
+            'dataFinePubProvvedimento'   => $schema->string()->description('Filtro data di fine della pubblicazione nel formato Y-m-d'),
+            'vigenza'                    => $schema->string()->description('Data per il filtro di vigenza nel formato Y-m-d'),
+            'classeProvvedimento'        => $schema->string()->description('Codice della classe del provvedimento'),
+            'paginazione'                => $schema->object()->description('Oggetto paginazione con paginaCorrente e numeroElementiPerPagina'),
+            'filtriMap'                  => $schema->object()->description('Mappa facoltativa di filtri per facet'),
         ];
     }
 }

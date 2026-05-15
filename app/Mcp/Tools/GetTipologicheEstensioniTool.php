@@ -8,9 +8,15 @@ use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Illuminate\Support\Facades\Http;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
+use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
+use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 
-#[Description('List available file extensions/formats for Normattiva downloads.')]
+#[IsDestructive(false)]
+#[IsIdempotent(false)]
+#[Title('Recupera tipologiche estensioni')]
+#[Description('Elenca le estensioni/formati di file disponibili per i download di Normattiva')]
 class GetTipologicheEstensioniTool extends Tool {
     public function handle() : Response {
         return Response::json(

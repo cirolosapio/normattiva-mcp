@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\Http;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
+use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
+use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 
-#[Description('Get act detail from Normattiva using a NIR URN, for example urn:nir:stato:legge:2001-12-28;448~art2.')]
+#[IsDestructive(false)]
+#[IsIdempotent(false)]
+#[Title('Recupera dettaglio atto da URN')]
+#[Description('Recupera il dettaglio di un atto da Normattiva utilizzando un URN NIR, ad esempio urn:nir:stato:legge:2001-12-28;448~art2')]
 class GetDettaglioAttoUrnTool extends Tool {
     public function handle(Request $request) : Response {
         $validated = $request->validate([
@@ -34,7 +40,7 @@ class GetDettaglioAttoUrnTool extends Tool {
     public function schema(JsonSchema $schema) : array {
         return [
             'urn' => $schema->string()
-                ->description('NIR URN identifying the legal act or a specific article.')
+                ->description('URN NIR che identifica l\'atto normativo o un articolo specifico, ad esempio urn:nir:stato:legge:2001-12-28;448~art2')
                 ->required(),
         ];
     }

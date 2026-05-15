@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\Http;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
+use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
+use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 
-#[Description('Full-text search on Normattiva acts with optional pagination, sorting, and facet filters.')]
+#[IsDestructive(false)]
+#[IsIdempotent(false)]
+#[Title('Ricerca atti semplice')]
+#[Description('Ricerca full-text sugli atti di Normattiva con supporto opzionale per paginazione, ordinamento e filtri a faccette')]
 class SearchAttiSempliceTool extends Tool {
     public function handle(Request $request) : Response {
         $validated = $request->validate([
@@ -46,16 +52,16 @@ class SearchAttiSempliceTool extends Tool {
     public function schema(JsonSchema $schema) : array {
         return [
             'testoRicerca' => $schema->string()
-                ->description('Free text query to search for legal acts.')
+                ->description('Testo libero per la ricerca di atti normativi')
                 ->required(),
             'orderType' => $schema->string()
-                ->description('Sort order for results.')
+                ->description('Ordine di ordinamento dei risultati, può essere "recente" o "rilevante"')
                 ->enum(['recente', 'rilevante'])
                 ->default('recente'),
             'paginazione' => $schema->object()
-                ->description('Pagination object with paginaCorrente and numeroElementiPerPagina.'),
+                ->description('Oggetto paginazione con paginaCorrente e numeroElementiPerPagina'),
             'filtriMap' => $schema->object()
-                ->description('Optional map of facet filters, for example codice_tipo_provvedimento or anno_provvedimento.'),
+                ->description('Mappa facoltativa di filtri per facet, ad esempio codice_tipo_provvedimento o anno_provvedimento'),
         ];
     }
 }

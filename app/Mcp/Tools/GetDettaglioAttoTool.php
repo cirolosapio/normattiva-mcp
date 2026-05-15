@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\Http;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
+use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
+use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 
-#[Description('Get act detail using redaction parameters such as codiceRedazionale, data GU, article and validity date.')]
+#[IsDestructive(false)]
+#[IsIdempotent(false)]
+#[Title('Recupera dettaglio atto')]
+#[Description('Recupera il dettaglio di un atto utilizzando parametri di redazione come codiceRedazionale, data GU, articolo e data di validità')]
 class GetDettaglioAttoTool extends Tool {
     public function handle(Request $request) : Response {
         $validated = $request->validate([
@@ -42,18 +48,18 @@ class GetDettaglioAttoTool extends Tool {
     public function schema(JsonSchema $schema) : array {
         return [
             'dataGU' => $schema->string()
-                ->description('Official Gazette date in format Y-m-d.')
+                ->description('Data della Gazzetta Ufficiale in formato Y-m-d')
                 ->required(),
             'codiceRedazionale' => $schema->string()
-                ->description('Normattiva redaction code, for example 088G0458.')
+                ->description('Codice di redazione Normattiva, ad esempio 088G0458')
                 ->required(),
-            'idArticolo'     => $schema->integer()->description('Optional article identifier.'),
-            'sottoArticolo'  => $schema->integer()->description('Optional sub-article identifier.'),
-            'sottoArticolo1' => $schema->integer()->description('Optional nested sub-article identifier.'),
-            'dataVigenza'    => $schema->string()->description('Optional validity date in format Y-m-d.'),
-            'idGruppo'       => $schema->integer()->description('Optional group identifier.'),
-            'progressivo'    => $schema->integer()->description('Optional progressive identifier.'),
-            'versione'       => $schema->integer()->description('Optional version number.'),
+            'idArticolo'     => $schema->integer()->description('Identificativo articolo opzionale'),
+            'sottoArticolo'  => $schema->integer()->description('Identificativo sottarticolo opzionale'),
+            'sottoArticolo1' => $schema->integer()->description('Identificativo sottarticolo annidato opzionale'),
+            'dataVigenza'    => $schema->string()->description('Data di vigenza opzionale in formato Y-m-d'),
+            'idGruppo'       => $schema->integer()->description('Identificativo gruppo opzionale'),
+            'progressivo'    => $schema->integer()->description('Identificativo progressivo opzionale'),
+            'versione'       => $schema->integer()->description('Numero di versione opzionale'),
         ];
     }
 }
