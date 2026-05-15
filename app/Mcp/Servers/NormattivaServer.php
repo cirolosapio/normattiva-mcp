@@ -8,9 +8,6 @@ use App\Mcp\Prompts\CheckLawValidityPrompt;
 use App\Mcp\Prompts\CompareRegulatoryVersionsPrompt;
 use App\Mcp\Prompts\ExplainLawPrompt;
 use App\Mcp\Prompts\NormativeActAnalysisPrompt;
-use App\Mcp\Resources\ActDetailsApp;
-use App\Mcp\Resources\ActDetailsByUrnApp;
-use App\Mcp\Resources\TestApp;
 use App\Mcp\Tools\GetActDenominationsTool;
 use App\Mcp\Tools\GetActDetailsByUrnTool;
 use App\Mcp\Tools\GetActDetailsTool;
@@ -19,14 +16,13 @@ use App\Mcp\Tools\GetProvisionClassTypesTool;
 use App\Mcp\Tools\SearchActsAdvancedTool;
 use App\Mcp\Tools\SearchActsSimpleTool;
 use App\Mcp\Tools\SearchUpdatedActsTool;
-use App\Mcp\Tools\TestTool;
 use Laravel\Mcp\Server;
 use Laravel\Mcp\Server\Attributes\Instructions;
 use Laravel\Mcp\Server\Attributes\Name;
 use Laravel\Mcp\Server\Attributes\Version;
 
 #[Name('Normattiva Server')]
-#[Version('0.0.6')]
+#[Version('0.0.7')]
 #[Instructions('Utilizza questo server per cercare atti normativi su Normattiva, ispezionare i dettagli degli atti e recuperare i metadati di lookup legale')]
 class NormattivaServer extends Server {
     protected array $tools = [
@@ -38,12 +34,9 @@ class NormattivaServer extends Server {
         GetActDenominationsTool::class,
         GetProvisionClassTypesTool::class,
         GetAvailableExtensionsTool::class,
-        TestTool::class,
     ];
     protected array $resources = [
-        ActDetailsApp::class,
-        ActDetailsByUrnApp::class,
-        TestApp::class,
+        //
     ];
     protected array $prompts = [
         NormativeActAnalysisPrompt::class,
