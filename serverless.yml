@@ -6,6 +6,7 @@ provider:
   stage: prod
   environment:
     APP_KEY: ${ssm:/${self:service}/APP_KEY}
+    APP_URL: ${ssm:/${self:service}/APP_URL}
     SENTRY_LARAVEL_DSN: ${ssm:/${self:service}/SENTRY_LARAVEL_DSN}
     LOG_STDERR_FORMATTER: Bref\Monolog\CloudWatchFormatter
 

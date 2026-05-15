@@ -1,239 +1,72 @@
 <x-mcp::app :title="$title">
   <x-slot:head>
-    <style>
-      :root {
-        --panel-bg: color-mix(in srgb, var(--color-background-primary) 86%, transparent);
-        --panel-border: color-mix(in srgb, var(--color-border-primary) 75%, transparent);
-        --accent: #0f766e;
-        --accent-weak: color-mix(in srgb, var(--accent) 14%, transparent);
-      }
-
-      body {
-        margin: 0;
-        background:
-          radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 12%, transparent), transparent 38%),
-          radial-gradient(circle at top right, color-mix(in srgb, #1d4ed8 10%, transparent), transparent 28%),
-          var(--color-background-primary);
-        color: var(--color-text-primary);
-        font-family: var(--font-sans);
-      }
-
-      .shell {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 24px;
-      }
-
-      .hero,
-      .panel {
-        border: 1px solid var(--panel-border);
-        background: var(--panel-bg);
-        backdrop-filter: blur(16px);
-        border-radius: 24px;
-        box-shadow: 0 24px 80px rgba(15, 23, 42, 0.12);
-      }
-
-      .hero {
-        padding: 24px;
-        display: grid;
-        gap: 16px;
-      }
-
-      .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        width: fit-content;
-        padding: 6px 12px;
-        border-radius: 999px;
-        background: var(--accent-weak);
-        color: var(--accent);
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .title {
-        margin: 0;
-        font-size: clamp(28px, 4vw, 48px);
-        line-height: 1.02;
-        letter-spacing: -0.04em;
-      }
-
-      .subtitle {
-        margin: 0;
-        color: var(--color-text-secondary);
-        font-size: 16px;
-        line-height: 1.6;
-        max-width: 70ch;
-      }
-
-      .actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-
-      .button {
-        appearance: none;
-        border: 0;
-        border-radius: 14px;
-        padding: 12px 16px;
-        font: inherit;
-        font-weight: 700;
-        cursor: pointer;
-        transition: transform 140ms ease, opacity 140ms ease, background-color 140ms ease;
-      }
-
-      .button:hover {
-        transform: translateY(-1px);
-      }
-
-      .button-primary {
-        background: var(--accent);
-        color: white;
-      }
-
-      .button-secondary {
-        background: color-mix(in srgb, var(--color-border-primary) 18%, transparent);
-        color: var(--color-text-primary);
-        border: 1px solid var(--panel-border);
-      }
-
-      .button:disabled {
-        opacity: 0.45;
-        cursor: not-allowed;
-        transform: none;
-      }
-
-      .grid {
-        display: grid;
-        gap: 18px;
-        margin-top: 18px;
-      }
-
-      @media (min-width: 960px) {
-        .grid {
-          grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
-        }
-      }
-
-      .panel {
-        padding: 20px;
-      }
-
-      .panel h2,
-      .panel h3 {
-        margin: 0 0 12px;
-        font-size: 18px;
-      }
-
-      .meta-list {
-        display: grid;
-        gap: 10px;
-      }
-
-      .meta-row {
-        display: grid;
-        gap: 4px;
-        padding: 12px;
-        border-radius: 16px;
-        background: color-mix(in srgb, var(--color-border-primary) 10%, transparent);
-      }
-
-      .meta-label {
-        color: var(--color-text-secondary);
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-      }
-
-      .meta-value {
-        font-weight: 600;
-        line-height: 1.5;
-      }
-
-      .badge-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 12px;
-      }
-
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 6px 10px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 600;
-        background: color-mix(in srgb, var(--color-border-primary) 14%, transparent);
-        color: var(--color-text-primary);
-      }
-
-      .article {
-        padding: 22px;
-        border-radius: 20px;
-        background: white;
-        color: #111827;
-        overflow: auto;
-        min-height: 200px;
-        line-height: 1.7;
-      }
-
-      .article :where(h1, h2, h3, h4, h5, h6) {
-        line-height: 1.2;
-      }
-
-      .empty-state {
-        color: var(--color-text-secondary);
-        border: 1px dashed var(--panel-border);
-        border-radius: 18px;
-        padding: 22px;
-        background: color-mix(in srgb, var(--color-border-primary) 8%, transparent);
-      }
-    </style>
+    <script>
+      window.tailwind = window.tailwind || {};
+      window.tailwind.config = {
+        darkMode: 'class',
+      };
+    </script>
   </x-slot:head>
 
-  <div class="shell">
-    <section class="hero">
-      <div class="eyebrow">Normattiva MCP App</div>
-      <h1 class="title" id="act-title">In attesa del dettaglio dell'atto</h1>
-      <p class="subtitle" id="act-subtitle">
-        Quando il tool restituisce il payload, qui compare il testo HTML dell'articolo e puoi copiare l'URN o aprire la pagina pubblica su Normattiva.
-      </p>
-
-      <div class="actions">
-        <button class="button button-primary" id="copy-urn-btn" type="button" disabled>Copia URN</button>
-        <button class="button button-secondary" id="open-normattiva-btn" type="button" disabled>Apri su Normattiva</button>
-      </div>
-
-      <div class="badge-row" id="badge-row" hidden></div>
-    </section>
-
-    <div class="grid">
-      <section class="panel">
-        <h2>Articolo</h2>
-        <div class="article" id="article-html">
-          <div class="empty-state">Esegui il tool di dettaglio per visualizzare qui il contenuto HTML dell'atto.</div>
+  <div
+    class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-100 text-slate-950 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-50">
+    <div class="mx-auto flex min-h-screen max-w-6xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
+      <section
+        class="rounded-3xl border border-slate-200/70 bg-white/85 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur-xl dark:border-slate-800/80 dark:bg-slate-900/75">
+        <div
+          class="inline-flex w-fit items-center gap-2 rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-teal-700 dark:bg-teal-500/10 dark:text-teal-300">
+          Normattiva MCP App
         </div>
+
+        <div class="mt-4 space-y-3">
+          <h1 class="text-3xl font-semibold tracking-tight text-slate-950 dark:text-slate-50 sm:text-4xl" id="act-title">In attesa del dettaglio
+            dell'atto</h1>
+          <p class="max-w-3xl text-sm leading-6 text-slate-600 dark:text-slate-300 sm:text-base" id="act-subtitle">
+            Quando il tool restituisce il payload, qui compare il testo HTML dell'articolo e puoi copiare l'URN o aprire la pagina pubblica su
+            Normattiva.
+          </p>
+        </div>
+
+        <div class="mt-5 flex flex-wrap gap-3">
+          <button
+            class="inline-flex items-center justify-center rounded-xl bg-teal-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-600 disabled:cursor-not-allowed disabled:opacity-45"
+            id="copy-urn-btn" type="button" disabled>Copia URN</button>
+          <button
+            class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-45 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+            id="open-normattiva-btn" type="button" disabled>Apri su Normattiva</button>
+        </div>
+
+        <div class="mt-4 flex flex-wrap gap-2" id="badge-row" hidden></div>
       </section>
 
-      <aside class="panel">
-        <h3>Metadati</h3>
-        <div class="meta-list" id="meta-list">
-          <div class="meta-row">
-            <div class="meta-label">URN</div>
-            <div class="meta-value" id="urn-value">Nessun URN ancora disponibile</div>
+      <div class="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
+        <section
+          class="rounded-3xl border border-slate-200/70 bg-white/85 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur-xl dark:border-slate-800/80 dark:bg-slate-900/75">
+          <h2 class="mb-4 text-lg font-semibold text-slate-950 dark:text-slate-50">Articolo</h2>
+          <div
+            class="min-h-64 overflow-auto rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
+            id="article-html">
+            <div
+              class="rounded-xl border border-dashed border-slate-300 bg-slate-50 px-5 py-6 text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+              Esegui il tool di dettaglio per visualizzare qui il contenuto HTML dell'atto.</div>
           </div>
-          <div class="meta-row">
-            <div class="meta-label">Stato</div>
-            <div class="meta-value" id="status-value">In attesa di risposta dal server</div>
+        </section>
+
+        <aside
+          class="rounded-3xl border border-slate-200/70 bg-white/85 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur-xl dark:border-slate-800/80 dark:bg-slate-900/75">
+          <h3 class="mb-4 text-lg font-semibold text-slate-950 dark:text-slate-50">Metadati</h3>
+          <div class="grid gap-3" id="meta-list">
+            <div class="rounded-2xl bg-slate-50 p-4 dark:bg-slate-950/60">
+              <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">URN</div>
+              <div class="mt-1 break-all text-sm font-medium text-slate-900 dark:text-slate-100" id="urn-value">Nessun URN ancora disponibile</div>
+            </div>
+            <div class="rounded-2xl bg-slate-50 p-4 dark:bg-slate-950/60">
+              <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Stato</div>
+              <div class="mt-1 text-sm font-medium text-slate-900 dark:text-slate-100" id="status-value">In attesa di risposta dal server</div>
+            </div>
           </div>
-        </div>
-      </aside>
+        </aside>
+      </div>
     </div>
   </div>
 
