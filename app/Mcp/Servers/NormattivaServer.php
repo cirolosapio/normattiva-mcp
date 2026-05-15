@@ -8,6 +8,7 @@ use App\Mcp\Prompts\CheckLawValidityPrompt;
 use App\Mcp\Prompts\CompareRegulatoryVersionsPrompt;
 use App\Mcp\Prompts\ExplainLawPrompt;
 use App\Mcp\Prompts\NormativeActAnalysisPrompt;
+use App\Mcp\Resources\ActDetailsApp;
 use App\Mcp\Tools\GetActDenominationsTool;
 use App\Mcp\Tools\GetActDetailsByUrnTool;
 use App\Mcp\Tools\GetActDetailsTool;
@@ -36,7 +37,7 @@ class NormattivaServer extends Server {
         GetAvailableExtensionsTool::class,
     ];
     protected array $resources = [
-        //
+        ActDetailsApp::class,
     ];
     protected array $prompts = [
         NormativeActAnalysisPrompt::class,
