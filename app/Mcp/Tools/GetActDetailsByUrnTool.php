@@ -18,7 +18,7 @@ use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 #[IsIdempotent(false)]
 #[Title('Recupera dettaglio atto da URN')]
 #[Description('Recupera il dettaglio di un atto da Normattiva utilizzando un URN NIR, ad esempio urn:nir:stato:legge:2001-12-28;448~art2')]
-class GetDettaglioAttoUrnTool extends Tool {
+class GetActDetailsByUrnTool extends Tool {
     public function handle(Request $request) : Response {
         $validated = $request->validate([
             'urn' => ['required', 'string', 'starts_with:urn:'],

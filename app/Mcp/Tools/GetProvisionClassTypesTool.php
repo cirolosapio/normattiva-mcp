@@ -17,7 +17,7 @@ use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 #[IsIdempotent(false)]
 #[Title('Recupera tipologiche classe provvedimento')]
 #[Description('Elenca le classi di provvedimento disponibili e i codici correlati dall\'endpoint di lookup di Normattiva')]
-class GetTipologicheClasseProvvedimentoTool extends Tool {
+class GetProvisionClassTypesTool extends Tool {
     public function handle() : Response {
         return Response::json(
             Http::normattiva()

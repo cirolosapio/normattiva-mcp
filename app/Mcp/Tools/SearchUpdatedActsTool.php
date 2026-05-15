@@ -16,29 +16,18 @@ use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 
 #[IsDestructive(false)]
 #[IsIdempotent(false)]
-#[Title('Ricerca atti semplice')]
-#[Description('Ricerca full-text sugli atti di Normattiva con supporto opzionale per paginazione, ordinamento e filtri a faccette')]
-class SearchAttiSempliceTool extends Tool {
+#[Title('Recupera atti aggiornati')]
+#[Description('Retrieve Normattiva acts updated within a date-time interval')]
+class SearchUpdatedActsTool extends Tool {
     public function handle(Request $request) : Response {
         $validated = $request->validate([
-            'testoRicerca'                        => ['required', 'string', 'min:2', 'max:500'],
-            'orderType'                           => ['nullable', 'string', 'in:recente,rilevante'],
-            'paginazione'                         => ['nullable', 'array'],
-            'paginazione.paginaCorrente'          => ['nullable', 'integer', 'min:1'],
-            'paginazione.numeroElementiPerPagina' => ['nullable', 'integer', 'min:1', 'max:100'],
-            'filtriMap'                           => ['nullable', 'array'],
+            'dataInizioAggiornamento' => ['required', 'date'],
+            'dataFineAggiornamento'   => ['required', 'date', 'after_or_equal:dataInizioAggiornamento'],
         ]);
-
-        $payload = array_replace_recursive([
-            'paginazione' => [
-                'paginaCorrente'          => 1,
-                'numeroElementiPerPagina' => 10,
-            ],
-        ], $validated);
 
         return Response::json(
             Http::normattiva()
-                ->post('ricerca/semplice', $payload)
+                ->post('ricerca/aggiornati', $validated)
                 ->throw()
                 ->json()
         );
@@ -51,17 +40,12 @@ class SearchAttiSempliceTool extends Tool {
      */
     public function schema(JsonSchema $schema) : array {
         return [
-            'testoRicerca' => $schema->string()
-                ->description('Testo libero per la ricerca di atti normativi')
+            'dataInizioAggiornamento' => $schema->string()
+                ->description('Data e ora di inizio dell\'intervallo di aggiornamento, in formato ISO-8601')
                 ->required(),
-            'orderType' => $schema->string()
-                ->description('Ordine di ordinamento dei risultati, può essere "recente" o "rilevante"')
-                ->enum(['recente', 'rilevante'])
-                ->default('recente'),
-            'paginazione' => $schema->object()
-                ->description('Oggetto paginazione con paginaCorrente e numeroElementiPerPagina'),
-            'filtriMap' => $schema->object()
-                ->description('Mappa facoltativa di filtri per facet, ad esempio codice_tipo_provvedimento o anno_provvedimento'),
+            'dataFineAggiornamento' => $schema->string()
+                ->description('Data e ora di fine dell\'intervallo di aggiornamento, in formato ISO-8601')
+                ->required(),
         ];
     }
 
@@ -83,7 +67,7 @@ class SearchAttiSempliceTool extends Tool {
                     'dataEmanazione'     => $schema->string()->nullable()->description('Data di emanazione in formato ISO-8601'),
                     'dataUltimaModifica' => $schema->string()->nullable()->description('Data ultima modifica in formato ISO-8601'),
                 ]))
-                ->description('Elenco degli atti restituiti dalla ricerca semplice')
+                ->description('Elenco degli atti trovati nell\'intervallo richiesto')
                 ->required(),
             'facetMap' => $schema->object()
                 ->description('Mappa dei facet aggregati per categoria')

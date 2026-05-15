@@ -15,13 +15,13 @@ use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 
 #[IsDestructive(false)]
 #[IsIdempotent(false)]
-#[Title('Recupera tipologiche estensioni')]
-#[Description('Elenca le estensioni/formati di file disponibili per i download di Normattiva')]
-class GetTipologicheEstensioniTool extends Tool {
+#[Title('Recupera tipologiche denominazione atto')]
+#[Description('Elenca le denominazioni di atto disponibili e i codici correlati dall\'endpoint di lookup di Normattiva')]
+class GetActDenominationsTool extends Tool {
     public function handle() : Response {
         return Response::json(
             Http::normattiva()
-                ->get('tipologiche/estensioni')
+                ->get('tipologiche/denominazione-atto')
                 ->throw()
                 ->json()
         );
@@ -45,10 +45,10 @@ class GetTipologicheEstensioniTool extends Tool {
         return [
             'items' => $schema->array()
                 ->items($schema->object([
-                    'label' => $schema->string()->description('Codice estensione/formato')->required(),
-                    'value' => $schema->string()->description('Descrizione estensione/formato')->required(),
+                    'label' => $schema->string()->description('Codice della denominazione atto')->required(),
+                    'value' => $schema->string()->description('Descrizione della denominazione atto')->required(),
                 ]))
-                ->description('Elenco delle estensioni/formati disponibili'),
+                ->description('Elenco delle denominazioni di atto disponibili'),
         ];
     }
 }
