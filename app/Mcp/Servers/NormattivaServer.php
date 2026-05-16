@@ -26,7 +26,7 @@ use Laravel\Mcp\Server\Attributes\Name;
 use Laravel\Mcp\Server\Attributes\Version;
 
 #[Name('Normattiva Server')]
-#[Version('0.0.8')]
+#[Version('0.0.9')]
 #[Instructions('Utilizza questo server per cercare atti normativi su Normattiva, ispezionare i dettagli degli atti e recuperare i metadati di lookup legale')]
 class NormattivaServer extends Server {
     protected array $tools = [
@@ -40,10 +40,10 @@ class NormattivaServer extends Server {
         GetAvailableExtensionsTool::class,
     ];
     protected array $resources = [
-        SearchActsSimpleApp::class,
-        SearchUpdatedActsApp::class,
-        ActDetailsApp::class,
-        ActDetailsByUrnApp::class,
+        // SearchActsSimpleApp::class,
+        // SearchUpdatedActsApp::class,
+        // ActDetailsApp::class,
+        // ActDetailsByUrnApp::class,
     ];
     protected array $prompts = [
         NormativeActAnalysisPrompt::class,

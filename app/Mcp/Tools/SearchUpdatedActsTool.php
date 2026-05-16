@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
 use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
 use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
+use Laravel\Mcp\Server\Tools\Annotations\IsReadOnly;
 
+#[IsReadOnly(true)]
 #[IsDestructive(false)]
 #[IsIdempotent(false)]
 #[Title('Recupera atti aggiornati')]
 #[Description('Retrieve Normattiva acts updated within a date-time interval')]
-#[RendersApp(resource: SearchUpdatedActsApp::class)]
+// #[RendersApp(resource: SearchUpdatedActsApp::class)]
 class SearchUpdatedActsTool extends Tool {
     public function handle(Request $request) : Response {
         $validated = $request->validate([

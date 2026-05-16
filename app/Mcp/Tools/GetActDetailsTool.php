@@ -20,7 +20,7 @@ use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 #[IsIdempotent(false)]
 #[Title('Recupera dettaglio atto')]
 #[Description('Recupera il dettaglio di un atto utilizzando parametri di redazione come codiceRedazionale, data GU, articolo e data di validità')]
-#[RendersApp(resource: ActDetailsApp::class)]
+// #[RendersApp(resource: ActDetailsApp::class)]
 class GetActDetailsTool extends Tool {
     public function handle(Request $request) : Response {
         $validated = $request->validate([
