@@ -4,11 +4,13 @@ declare(strict_types = 1);
 
 namespace App\Mcp\Tools;
 
+use App\Mcp\Resources\ActDetailsByUrnApp;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Illuminate\Support\Facades\Http;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Attributes\RendersApp;
 use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
 use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
@@ -18,6 +20,7 @@ use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 #[IsIdempotent(false)]
 #[Title('Recupera dettaglio atto da URN')]
 #[Description('Recupera il dettaglio di un atto da Normattiva utilizzando un URN NIR, ad esempio urn:nir:stato:legge:2001-12-28;448~art2')]
+#[RendersApp(resource: ActDetailsByUrnApp::class)]
 class GetActDetailsByUrnTool extends Tool {
     public function handle(Request $request) : Response {
         $validated = $request->validate([

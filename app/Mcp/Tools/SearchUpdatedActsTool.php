@@ -4,11 +4,13 @@ declare(strict_types = 1);
 
 namespace App\Mcp\Tools;
 
+use App\Mcp\Resources\SearchUpdatedActsApp;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Illuminate\Support\Facades\Http;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Attributes\RendersApp;
 use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
 use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
@@ -18,6 +20,7 @@ use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 #[IsIdempotent(false)]
 #[Title('Recupera atti aggiornati')]
 #[Description('Retrieve Normattiva acts updated within a date-time interval')]
+#[RendersApp(resource: SearchUpdatedActsApp::class)]
 class SearchUpdatedActsTool extends Tool {
     public function handle(Request $request) : Response {
         $validated = $request->validate([

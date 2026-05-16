@@ -4,11 +4,13 @@ declare(strict_types = 1);
 
 namespace App\Mcp\Tools;
 
+use App\Mcp\Resources\SearchActsSimpleApp;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Illuminate\Support\Facades\Http;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Attributes\RendersApp;
 use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
 use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
@@ -18,6 +20,7 @@ use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 #[IsIdempotent(false)]
 #[Title('Ricerca atti semplice')]
 #[Description('Ricerca full-text sugli atti di Normattiva con supporto opzionale per paginazione, ordinamento e filtri a faccette')]
+#[RendersApp(resource: SearchActsSimpleApp::class)]
 class SearchActsSimpleTool extends Tool {
     public function handle(Request $request) : Response {
         $validated = $request->validate([
