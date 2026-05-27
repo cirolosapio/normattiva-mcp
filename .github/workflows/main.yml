@@ -86,6 +86,7 @@ jobs:
               repo: context.repo.repo,
               deployment_id: ${{ steps.create_deployment.outputs.deployment_id }},
               state: 'failure',
+              auto_inactive: true,
             });
 
   github-release:
