@@ -9,6 +9,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    permissions:
+      deployments: write
+      contents: read
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -33,10 +38,25 @@ jobs:
         run: php artisan optimize -e config
 
       - name: Deploy to AWS Lambda
-        run: serverless deploy
+        id: deploy
+        run: |
+          OUTPUT=$(serverless deploy)
+
+          echo "$OUTPUT"
+
+          URL=$(echo "$OUTPUT" | grep "endpoint:" | awk '{print $2}')
+
+          echo "url=$URL" >> $GITHUB_OUTPUT
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Create GitHub Deployment
+        uses: chrnorm/deployment-action@v2
+        with:
+          token: ${{ github.token }}
+          environment-url: ${{ steps.deploy.outputs.url }}
+          initial-status: pending
 
   github-release:
     needs: deploy
