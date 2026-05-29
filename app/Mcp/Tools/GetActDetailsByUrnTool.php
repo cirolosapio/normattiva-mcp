@@ -13,11 +13,11 @@ use Laravel\Mcp\Server\Attributes\Description;
 use Laravel\Mcp\Server\Attributes\RendersApp;
 use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
-use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
-use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
+use Laravel\Mcp\Server\Tools\Annotations\IsOpenWorld;
+use Laravel\Mcp\Server\Tools\Annotations\IsReadOnly;
 
-#[IsDestructive(false)]
-#[IsIdempotent(false)]
+#[IsReadOnly]
+#[IsOpenWorld]
 #[Title('Recupera dettaglio atto da URN')]
 #[Description('Recupera il dettaglio di un atto da Normattiva utilizzando un URN NIR, ad esempio urn:nir:stato:legge:2001-12-28;448~art2')]
 #[RendersApp(resource: ActDetailsByUrnApp::class)]

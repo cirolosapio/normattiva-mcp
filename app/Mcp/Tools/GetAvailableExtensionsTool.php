@@ -10,9 +10,11 @@ use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Attributes\Description;
 use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
-use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
+use Laravel\Mcp\Server\Tools\Annotations\IsOpenWorld;
+use Laravel\Mcp\Server\Tools\Annotations\IsReadOnly;
 
-#[IsDestructive(false)]
+#[IsReadOnly]
+#[IsOpenWorld]
 #[Title('Recupera tipologiche estensioni')]
 #[Description('Elenca le estensioni/formati di file disponibili per i download di Normattiva')]
 class GetAvailableExtensionsTool extends Tool {

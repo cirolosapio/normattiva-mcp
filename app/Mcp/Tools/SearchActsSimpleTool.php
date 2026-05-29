@@ -13,11 +13,11 @@ use Laravel\Mcp\Server\Attributes\Description;
 use Laravel\Mcp\Server\Attributes\RendersApp;
 use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
-use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
-use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
+use Laravel\Mcp\Server\Tools\Annotations\IsOpenWorld;
+use Laravel\Mcp\Server\Tools\Annotations\IsReadOnly;
 
-#[IsDestructive(false)]
-#[IsIdempotent(false)]
+#[IsReadOnly]
+#[IsOpenWorld]
 #[Title('Ricerca atti semplice')]
 #[Description('Ricerca full-text sugli atti di Normattiva con supporto opzionale per paginazione, ordinamento e filtri a faccette')]
 #[RendersApp(resource: SearchActsSimpleApp::class)]

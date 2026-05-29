@@ -13,11 +13,11 @@ use Laravel\Mcp\Server\Attributes\Description;
 use Laravel\Mcp\Server\Attributes\RendersApp;
 use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
-use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
-use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
+use Laravel\Mcp\Server\Tools\Annotations\IsOpenWorld;
+use Laravel\Mcp\Server\Tools\Annotations\IsReadOnly;
 
-#[IsDestructive(false)]
-#[IsIdempotent(false)]
+#[IsReadOnly]
+#[IsOpenWorld]
 #[Title('Recupera dettaglio atto')]
 #[Description('Recupera il dettaglio di un atto utilizzando parametri di redazione come codiceRedazionale, data GU, articolo e data di validità')]
 #[RendersApp(resource: ActDetailsApp::class)]

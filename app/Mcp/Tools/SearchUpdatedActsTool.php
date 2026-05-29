@@ -13,13 +13,11 @@ use Laravel\Mcp\Server\Attributes\Description;
 use Laravel\Mcp\Server\Attributes\RendersApp;
 use Laravel\Mcp\Server\Attributes\Title;
 use Laravel\Mcp\Server\Tool;
-use Laravel\Mcp\Server\Tools\Annotations\IsDestructive;
-use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
+use Laravel\Mcp\Server\Tools\Annotations\IsOpenWorld;
 use Laravel\Mcp\Server\Tools\Annotations\IsReadOnly;
 
-#[IsReadOnly(true)]
-#[IsDestructive(false)]
-#[IsIdempotent(false)]
+#[IsReadOnly]
+#[IsOpenWorld]
 #[Title('Recupera atti aggiornati')]
 #[Description('Retrieve Normattiva acts updated within a date-time interval')]
 #[RendersApp(resource: SearchUpdatedActsApp::class)]
