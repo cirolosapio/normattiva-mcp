@@ -13,7 +13,11 @@ use Laravel\Mcp\Server\Ui\Enums\Library;
 use Laravel\Mcp\Server\Ui\Enums\Permission;
 
 #[Description('Mostra il dettaglio di un atto con HTML renderizzato e azioni rapide per URN e Normattiva.')]
-#[AppMeta(permissions: [Permission::ClipboardWrite], libraries: [Library::Tailwind])]
+#[AppMeta(
+    permissions: [Permission::ClipboardWrite],
+    libraries: [Library::Tailwind],
+    domain: '310ccb64d682b82507cb808fc51cedbf.claudemcpcontent.com'
+)]
 class ActDetailsApp extends AppResource {
     public function handle(Request $request) : Response {
         return Response::view('mcp.act-details-app', [

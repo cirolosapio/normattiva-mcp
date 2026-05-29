@@ -40,10 +40,10 @@ class NormattivaServer extends Server {
         GetAvailableExtensionsTool::class,
     ];
     protected array $resources = [
-        // SearchActsSimpleApp::class,
-        // SearchUpdatedActsApp::class,
-        // ActDetailsApp::class,
-        // ActDetailsByUrnApp::class,
+        SearchActsSimpleApp::class,
+        SearchUpdatedActsApp::class,
+        ActDetailsApp::class,
+        ActDetailsByUrnApp::class,
     ];
     protected array $prompts = [
         NormativeActAnalysisPrompt::class,

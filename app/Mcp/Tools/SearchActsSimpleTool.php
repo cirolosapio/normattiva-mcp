@@ -20,7 +20,7 @@ use Laravel\Mcp\Server\Tools\Annotations\IsIdempotent;
 #[IsIdempotent(false)]
 #[Title('Ricerca atti semplice')]
 #[Description('Ricerca full-text sugli atti di Normattiva con supporto opzionale per paginazione, ordinamento e filtri a faccette')]
-// #[RendersApp(resource: SearchActsSimpleApp::class)]
+#[RendersApp(resource: SearchActsSimpleApp::class)]
 class SearchActsSimpleTool extends Tool {
     public function handle(Request $request) : Response {
         $validated = $request->validate([
