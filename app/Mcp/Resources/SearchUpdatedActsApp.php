@@ -13,6 +13,7 @@ use Laravel\Mcp\Server\Ui\Enums\Library;
 
 #[Description('Mostra gli atti aggiornati in un intervallo temporale con elenco e metadati principali.')]
 #[AppMeta(
+    connectDomains: ['https://api.normattiva.it'],
     libraries: [Library::Tailwind],
     domain: '310ccb64d682b82507cb808fc51cedbf.claudemcpcontent.com'
 )]

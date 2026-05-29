@@ -13,6 +13,7 @@ use Laravel\Mcp\Server\Ui\Enums\Library;
 
 #[Description('Mostra i risultati della ricerca semplice con elenco atti e metadati principali.')]
 #[AppMeta(
+    connectDomains: ['https://api.normattiva.it'],
     libraries: [Library::Tailwind],
     domain: '310ccb64d682b82507cb808fc51cedbf.claudemcpcontent.com',
     prefersBorder: false,
