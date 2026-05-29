@@ -70,14 +70,28 @@
         return `${day}-${month}-${year}`;
       };
 
-      const buildNormattivaSearchUrl = (query) => {
-        const text = (query || '').trim();
-
-        if (text.length === 0) {
-          return 'https://www.normattiva.it/';
+      /**
+       * Builds a Normattiva URL.
+       * If act is provided, returns the detail URL for the act.
+       * Otherwise, returns the search URL for the given text.
+       * @param {string} [text]
+       * @param {object} [act]
+       * @returns {string}
+       */
+      const buildNormattivaSearchUrl = (act) => {
+        if (act && act.codiceRedazionale && act.dataGU) {
+          const params = new URLSearchParams();
+          params.set('atto.dataPubblicazioneGazzetta', act.dataGU);
+          params.set('atto.codiceRedazionale', act.codiceRedazionale);
+          if (act.articoloNumero !== undefined) params.set('atto.articolo.numero', act.articoloNumero);
+          if (act.sottoArticolo !== undefined) params.set('atto.articolo.sottoArticolo', act.sottoArticolo);
+          if (act.sottoArticolo1 !== undefined) params.set('atto.articolo.sottoArticolo1', act.sottoArticolo1);
+          if (act.qId) params.set('qId', act.qId);
+          if (act.tabID) params.set('tabID', act.tabID);
+          if (act.title) params.set('title', act.title);
+          return `https://www.normattiva.it/atto/caricaDettaglioAtto?${params.toString()}`;
         }
-
-        return `https://www.normattiva.it/ricerca/semplice?query=${encodeURIComponent(text)}`;
+        return null;
       };
 
       const renderActs = (acts, app) => {
@@ -88,7 +102,7 @@
           const card = document.createElement('button');
           card.type = 'button';
           card.className =
-            'w-full rounded-md border border-sky-300/60 dark:border-sky-400/50 bg-sky-500/5 dark:bg-sky-400/10 p-4 text-left transition hover:border-emerald-400/70 hover:bg-emerald-400/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70';
+            'w-full rounded-md border border-sky-300/60 dark:border-sky-400/50 bg-sky-500/5 dark:bg-sky-400/10 p-4 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70';
 
           const titleText = (act.titoloAtto || '').replace(/[\[\]\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
           const normalizedTitle = titleText.toLowerCase();
@@ -144,9 +158,13 @@
             extra.textContent = extraInfo.join(' | ');
           }
 
-          card.addEventListener('click', async () => {
-            await app.openLink(buildNormattivaSearchUrl(act.codiceRedazionale || act.titoloAtto || ''));
-          });
+          const url = buildNormattivaSearchUrl(act);
+          if (url) {
+            card.className += ' cursor-pointer hover:border-emerald-400/70 hover:bg-emerald-400/10';
+            card.addEventListener('click', async () => {
+              await app.openLink(url);
+            });
+          }
 
           card.append(title);
 
